@@ -1,0 +1,21 @@
+services:
+  selenium-1:
+    image: selenium/standalone-chrome
+    ports:
+      - "4444:4444"
+    shm_size: '2gb'
+    networks:
+      - selenium-net
+
+  tester:
+    build: .
+    depends_on:
+      - selenium-1
+    volumes:
+      - ./tests:/tests
+    networks:
+      - selenium-net
+    # можно убрать command, тогда выполнится CMD из Dockerfile
+
+networks:
+  selenium-net:
